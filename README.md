@@ -1,3 +1,14 @@
+# Table of Contents
+1. [Description](https://github.com/emrakyz/sanitize_fs?tab=readme-ov-file#description)
+2. [Advantages](https://github.com/emrakyz/sanitize_fs?tab=readme-ov-file#advantages)
+3. [Disadvantages](https://github.com/emrakyz/sanitize_fs?tab=readme-ov-file#disadvantages)
+4. [Example](https://github.com/emrakyz/sanitize_fs?tab=readme-ov-file#example)
+5. [Dependencies](https://github.com/emrakyz/sanitize_fs?tab=readme-ov-file#dependencies)
+6. [Installation](https://github.com/emrakyz/sanitize_fs?tab=readme-ov-file#installation)
+7. [Usage](https://github.com/emrakyz/sanitize_fs?tab=readme-ov-file#usage)
+8. [Why Sanitize Filenames?](https://github.com/emrakyz/sanitize_fs?tab=readme-ov-file#why-sanitize-filenames)
+9. [High Level Overview on How It Does Actually Work](https://github.com/emrakyz/sanitize_fs?tab=readme-ov-file#high-level-overview-on-how-it-does-actually-work)
+
 # Description
 Sanitize file & directory names recursively according to UNIX and URL standards. This means:
 - Nothing but lowercased alphanumeric English.

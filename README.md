@@ -59,7 +59,7 @@ You can directly install a pre-compiled binary from the **Releases** page but th
 
 `cd "sanitize_fs"`
 
-Statically compile as a single executable binary.
+3. Statically compile as a single executable binary.
 
 **With Clang:**
 ```
@@ -74,11 +74,11 @@ gcc -static -fno-pic -fno-pie -Ofast -flto -pipe -march=native -mtune=native -fu
         "sanitizefs.c" -o "sanitizefs"
 ```
 
-3. **Move the file to the desired location (Optional)**
+4. **Move the file to the desired location (Optional)**
 
-`mv "sanitizefs" "~/.local/bin"` **OR** `sudo mv "sanitizefs" "/usr/bin"`
+`mv -fv "sanitizefs" "~/.local/bin"` **OR** `sudo mv -fv "sanitizefs" "/usr/bin"`
 
-4. **Remove the cloned unnecessary directory.**
+5. **Remove the cloned unnecessary directory.**
 
 `rm -rfv "../sanitize_fs"`
 

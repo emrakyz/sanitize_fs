@@ -8,6 +8,8 @@
 7. [Usage](https://github.com/emrakyz/sanitize_fs?tab=readme-ov-file#usage)
 8. [Why Sanitize Filenames?](https://github.com/emrakyz/sanitize_fs?tab=readme-ov-file#why-sanitize-filenames)
 9. [High Level Overview on How It Does Actually Work](https://github.com/emrakyz/sanitize_fs?tab=readme-ov-file#high-level-overview-on-how-it-does-actually-work)
+11. [TUI File Manager Integration](https://github.com/emrakyz/sanitize_fs?tab=readme-ov-file#tui-file-manager-integration) 
+12. [Video Showcase](https://github.com/emrakyz/sanitize_fs?tab=readme-ov-file#video-showcase)
 
 # Description
 Sanitize file & directory names recursively according to UNIX and URL standards. This means:
@@ -15,6 +17,8 @@ Sanitize file & directory names recursively according to UNIX and URL standards.
 - Spaces, dots and dashes **-->** underscores.
 - No consecutive, trailing, leading underscores.
 - Keep the extensions intact.
+  
+The program is extremely fast; mostly instant with normal sized filesystems. If you try unrealistic number of files, directories (1 million+) with unrealistic levels of depth; then it can take about 10 seconds. 
 
 # Advantages
 - Utilizes all threads.
@@ -121,3 +125,28 @@ OPTIONS:
 8. All of the threads start renaming the entries at the same time by using the character replacement logic (**replace_chars** function).
 9. At the end, the lock is unlocked, and the parent directory is closed, and it is renamed individually. The same logic is also used for the indivudual files given to the program as command line arguments. Using threads for them are completely unnecessary since the process would be instant anyways.
 10. If the user runs the program with `-d` or `--dry-run` flag, everything would be mostly the same but they will be able to see the before-after results without actually renaming anything.
+
+# TUI File Manager Integration
+You can directly use the program inside a directory on TUI File Managers such as [LF](https://github.com/gokcehan/lf), [Ranger](https://github.com/ranger/ranger), [Yazi](https://github.com/sxyazi/yazi) or others. You can add a custom function with a keypress and automatically rename everything inside the current directory.
+
+As an example, for LF file manager, you can create a custom function by assigning a keypress on its configuration file.
+
+The below configuration creates a new command named sanitize and assigns it to "r" keypress: 
+```
+cmd sanitize ${{
+	sanitizefs "$(dirname "${f}")"
+}}
+
+map r sanitize
+```
+
+You can see the instant renaming operation in the below example video.
+
+# Video Showcase
+
+The first example is unrealistic (a million entries). On an idle machine with 16 threads, the program processes a million entries on 10 level depth, in about 10 seconds.
+
+The second example starting at **00:46**, shows a realistic example using a TUI file manager with an instant operation, with a keypress.
+
+[sanitizefs.webm](https://github.com/emrakyz/sanitize_fs/assets/89175311/c3403780-d28f-4853-8de7-cbd7d5239aad)
+

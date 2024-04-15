@@ -18,7 +18,7 @@ Sanitize file & directory names recursively according to UNIX and URL standards.
 
 # Advantages
 - Utilizes all threads.
-- Utilizes a thread lock mechanism for synchronization in order to prevent [Race Conditions](https://en.wikipedia.org/wiki/Race_condition) and [Parent-Child](https://en.wikipedia.org/wiki/Directory_(computing)) problems.
+- Utilizes a [Thread Lock Mechanism](https://en.wikipedia.org/wiki/Lock_(computer_science)) for synchronization in order to prevent [Race Conditions](https://en.wikipedia.org/wiki/Race_condition) and [Parent-Child](https://en.wikipedia.org/wiki/Directory_(computing)) problems.
 - Written in pure [C](https://en.wikipedia.org/wiki/C_(programming_language)#C2Y) with no external dependencies, using [Low Level](https://en.wikipedia.org/wiki/Low-level_programming_language) Linux kernel features.
 - Can be statically compiled with agressive [Compiler Optimizations](https://en.wikipedia.org/wiki/Optimizing_compiler) such as `-Ofast` and `LTO` (Link Time Optimizations).
 - Skips the files that the current user doesn't own for robustness and speed.

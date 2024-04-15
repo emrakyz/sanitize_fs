@@ -197,9 +197,6 @@ int main(int argc, char *argv[]) {
 			case 'd':
 		        	dry_run = true;
 		        	break;
-			case 'P':
-		        	progress_bar = true;
-		        	break;
 			case 'h':
 				printf("USAGE:\n"
 		               "        %s [-dh] [path1] [path2] ...\n\n"

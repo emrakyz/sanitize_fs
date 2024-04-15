@@ -54,13 +54,13 @@ Statically compile as a single executable binary.
 ```
 clang -static -fno-pic -fno-pie -Ofast -flto=full -pipe -march=native -mtune=native -funroll-loops \
         -Wl,-O3 -Wl,--as-needed -Wl,--gc-sections -Wl,--icf=all \
-        "sanitize_fs.c" -o "sanitizefs"
+        "sanitizefs.c" -o "sanitizefs"
 ```
 **With GCC:**
 ```
 gcc -static -fno-pic -fno-pie -Ofast -flto -pipe -march=native -mtune=native -funroll-loops \
         -Wl,-O3 -Wl,--as-needed -Wl,--gc-sections \
-        "sanitize_fs.c" -o "sanitizefs"
+        "sanitizefs.c" -o "sanitizefs"
 ```
 
 3. **Move the file to the desired location (Optional)**

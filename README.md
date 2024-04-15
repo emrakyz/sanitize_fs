@@ -19,14 +19,14 @@ Sanitize file & directory names recursively according to UNIX and URL standards.
 # Advantages
 - Utilizes all threads.
 - Utilizes a thread lock mechanism for synchronization in order to prevent race conditions, parent-child problems.
-- Written in pure C with no external dependencies, using low level Linux kernel features.
-- Can be statically compiled with agressive compiler optimizations such as `-Ofast` and `LTO` (Link Time Optimizations).
+- Written in pure C with no external dependencies, using [Low Level](https://en.wikipedia.org/wiki/Low-level_programming_language) Linux kernel features.
+- Can be statically compiled with agressive [Compiler Optimizations](https://en.wikipedia.org/wiki/Optimizing_compiler) such as `-Ofast` and `LTO` (Link Time Optimizations).
 - Skips the files that the current user doesn't own for robustness and speed.
-- Priveledged **Root** usage not allowed for security, safety.
-- It skips **dotfiles** (directories and files starting with a dot) encountered at any depth in order to protect configuration files, libraries and hidden files.
-- It can never remove files because it uses `renameat2` function from **The Linux Kernel** with `NO_REPLACE` feature; therefore it is safe.
-- It can be directly run on the terminal or it can be invoked by scripts and TUI File Managers' keyboard shortcuts. Therefore, it runs fast and is used quickly.
-- You can directly rename starting from `/` (the root directory) with a single command in order to rename simply everything on your system safely (excluding system files, dotfiles, non-possessed files), efficiently and in a very fast way.
+- [Priveledged Root Usage](https://en.wikipedia.org/wiki/Superuser) not allowed for security, safety.
+- It skips [Dotfiles](https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory) (directories and files starting with a dot) encountered at any depth in order to protect configuration files, libraries and hidden files.
+- It can never remove files because it uses [renameat2](https://lwn.net/Articles/592952/) function from **The Linux Kernel** with `NO_REPLACE` feature; therefore it is safe.
+- It can be directly run on the terminal or it can be invoked by scripts and [TUI File Manager](https://en.wikipedia.org/wiki/Ranger_(file_manager)) keyboard shortcuts. Therefore, it runs fast and is used quickly.
+- You can directly rename starting from `/` (the root directory) with a single command in order to rename simply everything on your system safely (excluding system files, dotfiles, [non-possessed files](https://en.wikipedia.org/wiki/File-system_permissions)), efficiently and in a very fast way.
 
 # Disadvantages
 - Obviously won't work on **Windows** and **Mac** but easily portable to **BSD**.
@@ -47,7 +47,7 @@ Becomes:
 `example_directory/example_video.mkv`
 
 # Dependencies
-Nothing but **The Linux Kernel** and **Glibc**. Easily portable to **BSD** and **Musl**.
+Nothing but **The Linux Kernel Version >=3.15** and **Glibc Version >=2.28**. Easily portable to **BSD** and **Musl**.
 
 # Installation
 You can directly install a pre-compiled binary from the **Releases** page but the below method is safer and the program will work faster.
@@ -99,7 +99,7 @@ OPTIONS:
 ```
 
 # Why Sanitize Filenames
-- UNIX-like systems (Linux distributions, BSD derivatives, Mac) heavily favor the described naming conventions. Sanitizing ensures that files and directories interact seamlessly with everything.
+- UNIX-like systems (**Linux** distributions, **BSD** derivatives, **Mac**) heavily favor the described naming conventions. Sanitizing ensures that files and directories interact seamlessly with everything.
 - URLs must adhere to specific encoding standards. Sanitizing simplifies their use within web addresses, preventing potential encoding issues and broken links.
 - Underscores act as very good word separators, improving file and directory name readability compared to spaces. Spaces used to split command line arguments; they are easier to miss and they require special encoding in URLs and they require escaping on the terminal. On the other hand, dashes are used for CLI programs' flags. Underscores are more unique in this aspect.
 - Lowercase standardization eliminates confusion and potential errors when referencing files and directories in scripts or commands.
@@ -112,12 +112,12 @@ OPTIONS:
 
 # High Level Overview on How It Does Actually Work
 1. Interpret the strings provided as a command line argument and convert them to full paths. 
-2. Traverse all directories and files (excluding symbolic links, dotfiles directories and all of their contents and non-possessed files) with a **DFS** (depth-first search) algorithm. DFS method is used to prevent race conditions and parent-child problems (an upper level directory name being renamed before contents, therefore the contents get lost).
-3. Create an array index from the findings by allocating enough memory based on the number of entries that will be renamed. A hash table could be used instead of arrays but mainly the data being processed is not that big here. The overhead from the implementation wouldn't outweigh the benefits of the simplicity of arrays.
+2. Traverse all directories and files (excluding symbolic links, dotfiles directories and all of their contents and non-possessed files) with a [DFS](https://en.wikipedia.org/wiki/Depth-first_search) (depth-first search) algorithm. DFS method is used to prevent [Race Conditions](https://en.wikipedia.org/wiki/Race_condition) and [Parent-Child](https://en.wikipedia.org/wiki/Directory_(computing)) problems (an upper level directory name being renamed before contents, therefore the contents get lost).
+3. Create an [Array Index](https://en.wikipedia.org/wiki/Array_(data_structure)) from the findings by allocating enough memory based on the number of entries that will be renamed. A [Hash Table](https://en.wikipedia.org/wiki/Hash_table) could be used instead of arrays but mainly the data being processed is not that big here. The overhead from the implementation wouldn't outweigh the benefits of the simplicity of arrays.
 4. Create threads based on the number of CPUs found on the machine.
-5. Split the entries evenly among all of the threads. Load balancing, work stealing or similar algorithms could also be used but since the renaming operation is mostly instant, they wouldn't provide many benefits here.
-6. Process entries depth by depth. The program keeps the record of the level of directory depth so it could only process one depth at a time in order to prevent race conditions, conflictions and parent-child problems. A more complex method could be implemented to process even more entries concurrently; but the complexity would probably introduce more problems than benefits.
-7. A mutex lock is used to track all entries. The lock won't be unlocked before every thread finishes processing all of the entries.
+5. Split the entries evenly among all of the threads. [Load Balancing](https://en.wikipedia.org/wiki/Load_balancing_(computing)), [Work Stealing](https://en.wikipedia.org/wiki/Work_stealing) or similar algorithms could also be used but since the renaming operation is mostly instant, they wouldn't provide many benefits here.
+6. Process entries depth by depth. The program keeps the record of the level of directory depth so it could only process one depth at a time in order to prevent [Race Conditions](https://en.wikipedia.org/wiki/Race_condition), conflictions and [Parent-Child](https://en.wikipedia.org/wiki/Directory_(computing)) problems. A more complex method could be implemented to process even more entries concurrently; but the complexity would probably introduce more problems than benefits.
+7. [A Mutex Lock](https://en.wikipedia.org/wiki/Lock_(computer_science)) is used to track all entries. The lock won't be unlocked before every thread finishes processing all of the entries.
 8. All of the threads start renaming the entries at the same time by using the character replacement logic (**replace_chars** function).
 9. At the end, the lock is unlocked, and the parent directory is closed, and it is renamed individually. The same logic is also used for the indivudual files given to the program as command line arguments. Using threads for them are completely unnecessary since the process would be instant anyways.
 10. If the user runs the program with `-d` or `--dry-run` flag, everything would be mostly the same but they will be able to see the before-after results without actually renaming anything.

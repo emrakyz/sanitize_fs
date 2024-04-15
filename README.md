@@ -55,11 +55,11 @@ You can directly install a pre-compiled binary from the **Releases** page but th
    
 `git clone "https://github.com/emrakyz/sanitize_fs.git"`
 
-2. **Cd into cloned directory:**
+2. **Get into cloned directory:**
 
 `cd "sanitize_fs"`
 
-3. Statically compile as a single executable binary.
+3. **Statically compile as a single executable binary.**
 
 **With Clang:**
 ```

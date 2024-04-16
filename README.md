@@ -94,7 +94,7 @@ USAGE:
 EXAMPLES:
         sanitizefs EXAMPLE_DIR
         sanitizefs --dry-run "/home/username/EXAMPLE DIR"
-        sanitizefs "/"
+        sanitizefs "/home"
         sanitizefs "VIDEO FILE.mkv" "PICTURE.jpg" "DIRECTORY" 
 
 OPTIONS:

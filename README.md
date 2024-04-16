@@ -135,9 +135,9 @@ The below configuration creates a new command named sanitize and assigns it to "
 ```
 cmd sanitize ${{
         # If no file is selected, use the current directory as the argument.
-	[ -n "${fx}" ] && {
+	[ -n "${fs}" ] && {
 		set -f
-		sanitizefs ${fx}
+		sanitizefs ${fs}
 	} || sanitizefs "$(dirname "${f}")"
 }}
 

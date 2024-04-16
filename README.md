@@ -30,7 +30,7 @@ The program is extremely fast; mostly instant with normal sized filesystems. If 
 - It skips [Dotfiles](https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory) (directories and files starting with a dot) encountered at any depth in order to protect configuration files, libraries and hidden files.
 - It can never remove files because it uses [renameat2](https://lwn.net/Articles/592952/) function from **The Linux Kernel** with `NO_REPLACE` feature; therefore it is safe.
 - It can be directly run on the terminal or it can be invoked by scripts and [TUI File Manager](https://en.wikipedia.org/wiki/Ranger_(file_manager)) keyboard shortcuts. Therefore, it runs fast and is used quickly.
-- You can directly rename starting from `/` (the root directory) with a single command in order to rename simply everything on your system safely (excluding system files, dotfiles, [non-possessed files](https://en.wikipedia.org/wiki/File-system_permissions)), efficiently and in a very fast way.
+- You can directly rename starting from `/home` with a single command in order to rename simply everything on your system safely (excluding system files, dotfiles, [non-possessed files](https://en.wikipedia.org/wiki/File-system_permissions)), efficiently and in a very fast way.
 
 # Disadvantages
 - Obviously won't work on **Windows** and **Mac** but easily portable to **BSD**.

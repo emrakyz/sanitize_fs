@@ -208,7 +208,7 @@ int main(int argc, char *argv[]) {
 		               "EXAMPLES:\n"
 		               "        %s EXAMPLE_DIR\n"
 		               "        %s --dry-run \"/home/username/EXAMPLE DIR\"\n"
-		               "        %s \"/\"\n"
+		               "        %s \"/home\"\n"
 			       "	%s \"VIDEO FILE.mkv\" \"PICTURE.jpg\" \"DIRECTORY\" \n\n"
 		               "OPTIONS:\n"
 		               "        -d, --dry-run	Perform a 'dry run' and exit. Do not rename anything.\n"

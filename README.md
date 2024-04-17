@@ -10,6 +10,7 @@
 9. [High Level Overview on How It Does Actually Work](https://github.com/emrakyz/sanitize_fs?tab=readme-ov-file#high-level-overview-on-how-it-does-actually-work)
 11. [TUI File Manager Integration](https://github.com/emrakyz/sanitize_fs?tab=readme-ov-file#tui-file-manager-integration) 
 12. [Video Showcase](https://github.com/emrakyz/sanitize_fs?tab=readme-ov-file#video-showcase)
+13. ["It's My Favourite Character. Why Do We Remove It?"](https://github.com/emrakyz/sanitize_fs?tab=readme-ov-file#its-my-favourite-character-why-do-we-remove-it)
 
 # Description
 Sanitize file & directory names recursively according to UNIX and URL standards. This means:
@@ -154,3 +155,64 @@ The second example starting at **00:46**, shows a realistic example using a TUI 
 
 [sanitizefs.webm](https://github.com/emrakyz/sanitize_fs/assets/89175311/c3403780-d28f-4853-8de7-cbd7d5239aad)
 
+# It's My Favourite Character. Why Do We Remove It?
+
+## Why Not Spaces
+
+- They are used as argument separators on shells.
+- They require escaping with a backslash.
+- They can cause filename splitting.
+- They require special encoding on URLs (they appear as "%20").
+
+## Why Not Dashes
+
+- Dashes aren't inherently wrong but they are the second best for the word separation in filenames.
+- They are used for command line flags. So, their usage is not unique.
+- They are used for subtraction.
+- Dashes are used to separate domains, subdomains on URLs.
+- They have problematic double-click selections for filenames. For example try to write "word1-word2" on your browser's adress bar. When you double click a word, you can only select either word1 or word2 because they are seen as two arguments and separated by the dash. With underscores you can directly select "word1_word2" with a double click because the underscore doesn't have a special meaning there.
+- Dashes are less readable or they can be seen harder, especially with certain fonts.
+- `\w` or `\b` characters can't match the full name when dashes used because dashes split `\w` entries. It's same for text editors. When you press `w` on Vim, you jump to the next dash; if you instead use underscores, you jump to the next word because underscores make the name uniformed instead of splitting.
+
+## Why Not Dots
+- Dots are used for extension separators, so they have a special meaning.
+- They are used to indicate the directory on the shell. Current directory (.), parent directory (..).
+- They are used on hidden files, configuration files.
+- On URLs, dots have much more important meanings, so it's better to increase uniqueness.
+- They are used on IP addresses.
+- They are harder to see compared to underscores. The distance is not high enough.
+
+## Why Underscores
+
+- Underscores are common separators in variable and function names in many programming languages.
+- They have no special meaning on the shell, they are interpreted as a standard character.
+- They clearly separate the words on filenames. The distance is big enough to not miss.
+- They require no special encoding on URLs. They are simply seen as "_".
+- They can't be mistaken either as a command line flag or a directory location, or a filename extension separator.
+- Underscores are considered as word separators by a lot of search engines.
+- The filenames won't be split as you experience with dash; you can simply double click to select the complete filename. You can easily use `\w` or `\b` characters with your favourite utilities without worrying about splitting.
+
+## Why Not Special Characters
+
+- Almost all special characters have a specific meaning on the shell. They can show regex, wildcards, variable expansions, command execution and chaining, logical controls and all.
+- They also have a specific meaning on URLs.
+- They generally require escaping, otherwise they cause problems.
+- Especially on URLs, and on file names, this can create a lot of security problems. The specific encoding, and escaping mechanism can be abused.
+
+## Why Not Other Languages
+
+- Most Unix systems, utilize utf-8 English characters by default.
+- URLs only support English characters.
+- Other languages' specific characters may need extra handling. For example Arabic is reversed or I can't see Japanese characters on my minimal Gentoo setup. They are less universal. Some terminals can't render them properly.
+- Search engines or operating systems might not correctly interpret filenames with non-English words, affecting search results and file indexing.
+- Characters can have different meanings or appearances based on the language or script, potentially causing confusion.
+- Moving files with non-English names between systems with different language support could result in unpredictable outcomes.
+- Most things can easily be converted. For example I use C instead of Ç even for Turkish filenames.
+
+## Why Only Lowercased
+
+- It's easier to use lowercased characters on URLs. For example some URLs we use curl with on a TTY are easy to memorize.
+- On UNIX and URLs, case sensitivity is important. "File" and "file" can be different. This creates confusion and confliction.
+- If you try to use the same files on Windows, you will have problems because Windows can't separate File from file.
+- UNIX tools work easier with lowercased characters. It's easier to sort things or it's easier to use tools like grep, sed and all others with lowercased characters. You don't need to think about things you search if they were uppercased or lowercased.
+- You don't need to remember the exact capitalization on anything.

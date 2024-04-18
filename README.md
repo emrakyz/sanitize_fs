@@ -135,11 +135,9 @@ As an example, for LF file manager, you can create a custom function by assignin
 The below configuration creates a new command named sanitize and assigns it to "r" keypress: 
 ```
 cmd sanitize ${{
-        # If no file is selected, use the current directory as the argument.
-	[ -n "${fs}" ] && {
-		set -f
-		sanitizefs ${fs}
-	} || sanitizefs "$(dirname "${f}")"
+        # Only renames selected files.
+	set -f
+	sanitizefs ${fx}
 }}
 
 map r sanitize
